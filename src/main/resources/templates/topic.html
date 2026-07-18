@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${topic.title} + ' | Puzzl Games'">Тест | Puzzl Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a th:href="@{/}" class="logo">Puzzl <span>Games</span></a>
+    </div>
+</header>
+
+<section class="topic-hero">
+    <div class="container">
+        <a th:href="@{/}" class="back-link">&larr; Все тесты</a>
+        <h1 th:text="${topic.title}">Название теста</h1>
+        <p th:text="${topic.description}">Описание теста</p>
+        <div class="topic-info">
+            <span><strong th:text="${topic.questionCount}">5</strong> вопросов</span>
+            <span>~3–5 минут</span>
+            <span>Без регистрации</span>
+        </div>
+        <form th:action="@{/tests/{slug}/start(slug=${topic.slug})}" method="post">
+            <button type="submit" class="btn btn-primary">Начать тест</button>
+        </form>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2026 Puzzl Games</p>
+    </div>
+</footer>
+</body>
+</html>

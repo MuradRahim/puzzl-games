@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты на знания | Puzzl Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a th:href="@{/}" class="logo">Puzzl <span>Games</span></a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Тесты на знания с ответами и расшифровкой результатов</h1>
+        <p>
+            Проверьте, насколько хорошо вы знакомы с SQL, Java, Spring Boot и другими темами.
+            Каждый тест состоит из вопросов с четырьмя вариантами ответа — только один из них правильный.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Доступные тесты</h2>
+        <div class="test-grid">
+            <article class="test-card" th:each="topic : ${topics}">
+                <h3 th:text="${topic.title}">Название теста</h3>
+                <p th:text="${topic.description}">Описание теста</p>
+                <div class="test-card__meta"
+                     th:text="${topic.questionCount} + ' ' + (${topic.questionCount} == 1 ? 'вопрос' : (${topic.questionCount} >= 2 and ${topic.questionCount} <= 4 ? 'вопроса' : 'вопросов'))">
+                    5 вопросов
+                </div>
+                <a th:href="@{/tests/{slug}(slug=${topic.slug})}" class="btn btn-primary btn-block">Пройти тест</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="faq">
+    <div class="container">
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq-item">
+            <h3>Для чего нужны эти тесты?</h3>
+            <p>
+                Тесты помогают быстро оценить уровень знаний по выбранной теме и понять,
+                какие разделы стоит повторить.
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>Нужна ли регистрация?</h3>
+            <p>
+                Нет. Все тесты можно проходить анонимно, без создания аккаунта.
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>Сколько времени занимает прохождение?</h3>
+            <p>
+                В среднем 3–5 минут — зависит от количества вопросов в тесте.
+            </p>
+        </div>
+        <div class="faq-item">
+            <h3>Можно ли пройти тест повторно?</h3>
+            <p>
+                Да. Вы можете проходить любой тест сколько угодно раз и сравнивать результаты.
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2026 Puzzl Games — тесты на знания разных тем</p>
+    </div>
+</footer>
+</body>
+</html>

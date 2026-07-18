@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: puzzl-games-db
+    environment:
+      POSTGRES_DB: puzzl_games
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - puzzl_games_data:/var/lib/postgresql/data
+
+volumes:
+  puzzl_games_data:

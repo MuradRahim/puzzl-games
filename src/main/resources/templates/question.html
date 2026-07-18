@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Вопрос ' + ${question.questionNumber} + ' | Puzzl Games'">Вопрос | Puzzl Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a th:href="@{/}" class="logo">Puzzl <span>Games</span></a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="quiz-card">
+        <div class="progress-bar">
+            <div class="progress-bar__fill"
+                 th:style="'width:' + (${question.questionNumber} * 100 / ${question.totalQuestions}) + '%'"></div>
+        </div>
+        <div class="quiz-meta"
+             th:text="'Вопрос ' + ${question.questionNumber} + ' из ' + ${question.totalQuestions}">
+            Вопрос 1 из 5
+        </div>
+        <h2 class="quiz-question" th:text="${question.questionText}">Текст вопроса</h2>
+
+        <form th:action="@{/tests/{slug}/answer(slug=${topicSlug})}" method="post" id="quizForm">
+            <div class="answers">
+                <div class="answer-option" th:each="answer : ${question.answers}">
+                    <input type="radio"
+                           th:id="'answer-' + ${answer.id}"
+                           name="answerId"
+                           th:value="${answer.id}"
+                           required>
+                    <label class="answer-label"
+                           th:for="'answer-' + ${answer.id}"
+                           th:text="${answer.answerText}">Вариант ответа</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">
+                <span th:if="${question.questionNumber < question.totalQuestions}">Следующий вопрос</span>
+                <span th:if="${question.questionNumber == question.totalQuestions}">Завершить тест</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2026 Puzzl Games</p>
+    </div>
+</footer>
+</body>
+</html>

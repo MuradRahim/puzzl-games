@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Результат: ' + ${result.topicTitle} + ' | Puzzl Games'">Результат | Puzzl Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header">
+    <div class="container site-header__inner">
+        <a th:href="@{/}" class="logo">Puzzl <span>Games</span></a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="result-card">
+        <p class="quiz-meta" th:text="${result.topicTitle}">Название теста</p>
+        <p class="result-score">
+            <span th:text="${result.scorePercent}">80</span><span>%</span>
+        </p>
+        <h2 class="result-level" th:text="${result.levelTitle}">Хороший результат</h2>
+        <p class="result-description" th:text="${result.levelDescription}">Описание результата</p>
+
+        <div class="result-stats">
+            <div class="result-stat">
+                <div class="result-stat__value" th:text="${result.correctAnswers} + '/' + ${result.totalQuestions}">4/5</div>
+                <div class="result-stat__label">Правильных ответов</div>
+            </div>
+            <div class="result-stat">
+                <div class="result-stat__value" th:text="${result.scorePercent} + '%'">80%</div>
+                <div class="result-stat__label">Точность</div>
+            </div>
+        </div>
+
+        <div class="result-actions">
+            <form th:action="@{/tests/{slug}/start(slug=${result.topicSlug})}" method="post">
+                <button type="submit" class="btn btn-primary btn-block">Пройти ещё раз</button>
+            </form>
+            <a th:href="@{/}" class="btn btn-outline btn-block">Все тесты</a>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2026 Puzzl Games</p>
+    </div>
+</footer>
+</body>
+</html>
