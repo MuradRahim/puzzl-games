@@ -48,6 +48,6 @@ public class CrudTopicRepository {
     }
 
     public List<Topic> getAllTopics() {
-
+        return null;
     }
 }

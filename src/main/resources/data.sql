@@ -108,7 +108,7 @@ FROM questions q
                       ('spring', 3, '@Bean', FALSE),
                       ('spring', 3, '@Value', FALSE),
                       ('spring', 3, '@Qualifier', FALSE),
-                      ('spring', 4, 'application.properties', TRUE),
+                      ('spring', 4, 'application.yaml', TRUE),
                       ('spring', 4, 'pom.xml', FALSE),
                       ('spring', 4, 'schema.sql', FALSE),
                       ('spring', 4, 'logback.xml', FALSE),
