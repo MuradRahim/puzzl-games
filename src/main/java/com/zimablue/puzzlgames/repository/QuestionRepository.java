@@ -43,7 +43,7 @@ public class QuestionRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при загрузке вопросов темы: " + topicId, e);
+            throw new DatabaseException("Ошибка при загрузке вопросов темы: " + topicId);
         }
 
         return questionIds;
@@ -68,7 +68,7 @@ public class QuestionRepository {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при поиске вопроса: " + id, e);
+            throw new DatabaseException("Ошибка при поиске вопроса: " + id);
         }
     }
 

@@ -27,4 +27,8 @@ public class TopicService {
     public List<Topic> getTopics() {
         return topicCrudRepository.getAllTopics();
     }
+
+    public Topic updateTopic(Topic topic) {
+        return topicCrudRepository.updateTopic(topic);
+    }
 }

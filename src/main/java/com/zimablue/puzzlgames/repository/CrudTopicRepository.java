@@ -42,7 +42,40 @@ public class CrudTopicRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при создании темы", e);
+            throw new DatabaseException("Ошибка при создании темы");
+        }
+
+        return topic;
+    }
+
+    public Topic updateTopic(Topic topic) {
+        String sql = """
+        UPDATE topics
+        SET slug = ?, 
+            title = ?, 
+            description = ?
+        WHERE id = ?
+        """;
+
+        try (Connection connection = connectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // Подставляем параметры
+            statement.setString(1, topic.getSlug());
+            statement.setString(2, topic.getTitle());
+            statement.setString(3, topic.getDescription());
+            statement.setLong(4, topic.getId());
+
+            // Выполняем обновление
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new DatabaseException(
+                    "Тема с id = " + topic.getId() + " не найдена");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Ошибка при обновлении темы");
         }
 
         return topic;
@@ -63,7 +96,7 @@ public class CrudTopicRepository {
                 topics.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при загрузке списка тем", e);
+            throw new DatabaseException("Ошибка при загрузке списка тем");
         }
 
         return topics;

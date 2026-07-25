@@ -46,7 +46,7 @@ public class TopicRepository {
                 topics.add(mapRow(resultSet));
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при загрузке списка тем", e);
+            throw new DatabaseException("Ошибка при загрузке списка тем");
         }
 
         return topics;
@@ -77,7 +77,7 @@ public class TopicRepository {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при поиске темы по slug: " + slug, e);
+            throw new DatabaseException("Ошибка при поиске темы по slug: " + slug);
         }
     }
 

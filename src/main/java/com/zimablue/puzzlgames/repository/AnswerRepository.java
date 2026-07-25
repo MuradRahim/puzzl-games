@@ -43,7 +43,7 @@ public class AnswerRepository {
                 }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при загрузке ответов вопроса: " + questionId, e);
+            throw new DatabaseException("Ошибка при загрузке ответов вопроса: " + questionId);
         }
 
         return answers;
@@ -68,7 +68,7 @@ public class AnswerRepository {
                 return Optional.empty();
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Ошибка при поиске ответа: " + id, e);
+            throw new DatabaseException("Ошибка при поиске ответа: " + id);
         }
     }
 

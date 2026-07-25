@@ -38,9 +38,9 @@ public class DatabaseConnectionProvider {
             Class.forName(driverClassName);
             return DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
-            throw new DatabaseException("JDBC-драйвер не найден: " + driverClassName, e);
+            throw new DatabaseException("JDBC-драйвер не найден: " + driverClassName);
         } catch (SQLException e) {
-            throw new DatabaseException("Не удалось подключиться к базе данных", e);
+            throw new DatabaseException("Не удалось подключиться к базе данных");
         }
     }
 }
