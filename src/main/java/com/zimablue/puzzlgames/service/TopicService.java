@@ -6,6 +6,8 @@ import com.zimablue.puzzlgames.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TopicService {
@@ -20,5 +22,9 @@ public class TopicService {
         topic.setQuestionCount(questionCount);
 
         topicCrudRepository.createTopic(topic);
+    }
+
+    public List<Topic> getTopics() {
+        return topicCrudRepository.getAllTopics();
     }
 }

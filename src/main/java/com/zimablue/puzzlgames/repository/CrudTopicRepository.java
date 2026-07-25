@@ -6,6 +6,7 @@ import com.zimablue.puzzlgames.model.Topic;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -48,6 +49,32 @@ public class CrudTopicRepository {
     }
 
     public List<Topic> getAllTopics() {
-        return null;
+        String sql = """
+                SELECT * FROM topics 
+                """;
+
+        List<Topic> topics = new ArrayList<>();
+
+        try (Connection connection = connectionProvider.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                topics.add(mapRow(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Ошибка при загрузке списка тем", e);
+        }
+
+        return topics;
+    }
+
+    private Topic mapRow(ResultSet resultSet) throws SQLException {
+        return Topic.builder()
+            .id(resultSet.getLong("id"))
+            .slug(resultSet.getString("slug"))
+            .title(resultSet.getString("title"))
+            .description(resultSet.getString("description"))
+            .build();
     }
 }
