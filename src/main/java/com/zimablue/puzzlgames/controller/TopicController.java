@@ -21,8 +21,12 @@ public class TopicController {
 
     @GetMapping("/topic")
     public List<Topic> getTopics() {
-        System.out.println("Привет GetTopics");
         return topicService.getTopics();
+    }
+
+    @GetMapping("/topic/{id}")
+    public Topic getTopicsById(@PathVariable Long id) {
+        return topicService.getTopicsById(id);
     }
 
     @PutMapping("/topic/update")

@@ -18,6 +18,10 @@ public class TopicService {
         return topicCrudRepository.createTopic(topic);
     }
 
+    public Topic getTopicsById(Long id) {
+        return topicCrudRepository.getTopicById(id);
+    }
+
     public List<Topic> getTopics() {
         return topicCrudRepository.getAllTopics();
     }

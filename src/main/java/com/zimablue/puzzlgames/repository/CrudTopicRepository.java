@@ -102,6 +102,28 @@ public class CrudTopicRepository {
         }
     }
 
+    public Topic getTopicById(Long id) {
+        String sql = """
+                SELECT * FROM topics WHERE id = ?
+                """;
+        Topic topicFromBD = null;
+        try (Connection connection = connectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                topicFromBD = mapRow(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Ошибка при загрузке списка тем");
+        }
+
+        return topicFromBD;
+    }
+
     public List<Topic> getAllTopics() {
         String sql = """
                 SELECT * FROM topics 
