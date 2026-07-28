@@ -2,11 +2,7 @@ package com.zimablue.puzzlgames.controller;
 
 import com.zimablue.puzzlgames.model.Topic;
 import com.zimablue.puzzlgames.service.TopicService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,6 +14,11 @@ public class TopicController {
         this.topicService = topicService;
     }
 
+    @PostMapping("/topic")
+    public Topic createTopic(@RequestBody Topic topic) {
+        return topicService.createTopic(topic);
+    }
+
     @GetMapping("/topic")
     public List<Topic> getTopics() {
         System.out.println("Привет GetTopics");
@@ -27,5 +28,10 @@ public class TopicController {
     @PutMapping("/topic/update")
     public Topic updateTopic(@RequestBody Topic topic) {
         return topicService.updateTopic(topic);
+    }
+
+    @DeleteMapping("/topic/{id}")
+    public void deleteTopic(@PathVariable Long id) {
+        topicService.deleteTopic(id);
     }
 }

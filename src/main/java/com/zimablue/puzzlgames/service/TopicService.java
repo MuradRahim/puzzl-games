@@ -14,14 +14,8 @@ public class TopicService {
     private final TopicRepository topicRepository;
     private final CrudTopicRepository topicCrudRepository;
 
-    public void save(String slug, String title, String description, int questionCount) {
-        Topic topic = new Topic();
-        topic.setSlug(slug);
-        topic.setTitle(title);
-        topic.setDescription(description);
-        topic.setQuestionCount(questionCount);
-
-        topicCrudRepository.createTopic(topic);
+    public Topic createTopic(Topic topic) {
+        return topicCrudRepository.createTopic(topic);
     }
 
     public List<Topic> getTopics() {
@@ -30,5 +24,9 @@ public class TopicService {
 
     public Topic updateTopic(Topic topic) {
         return topicCrudRepository.updateTopic(topic);
+    }
+
+    public void deleteTopic(Long id) {
+        topicCrudRepository.deleteTopicById(id);
     }
 }

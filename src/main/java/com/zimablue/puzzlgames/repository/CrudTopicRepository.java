@@ -19,8 +19,8 @@ public class CrudTopicRepository {
 
     public Topic createTopic(Topic topic) {
         String sql = """
-            INSERT INTO topics (slug, title, description, questionCount) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO topics (slug, title, description) 
+            VALUES (?, ?, ?)
             """;
 
         try (Connection connection = connectionProvider.getConnection();
@@ -30,7 +30,6 @@ public class CrudTopicRepository {
             statement.setString(1, topic.getSlug());
             statement.setString(2, topic.getTitle());
             statement.setString(3, topic.getDescription());
-            statement.setInt(4, topic.getQuestionCount());
 
             // 2. Выполняем вставку
             statement.executeUpdate();
@@ -79,6 +78,28 @@ public class CrudTopicRepository {
         }
 
         return topic;
+    }
+
+    public void deleteTopicById(long id) {
+        String sql = """
+        DELETE FROM topics
+        WHERE id = ?
+        """;
+
+        try (Connection connection = connectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setLong(1, id);
+
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted == 0) {
+                throw new DatabaseException("Тема с id = " + id + " не найдена");
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Ошибка при удалении темы");
+        }
     }
 
     public List<Topic> getAllTopics() {
