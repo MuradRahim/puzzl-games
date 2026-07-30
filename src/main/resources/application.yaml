@@ -12,11 +12,16 @@ spring:
       enabled: true
       path: /h2-console
 
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+    open-in-view: false
+    show-sql: false
 
   sql:
     init:
       mode: always
-      schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
 
 

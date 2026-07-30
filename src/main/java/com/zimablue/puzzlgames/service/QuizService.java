@@ -11,6 +11,7 @@ import com.zimablue.puzzlgames.repository.QuestionRepository;
 import com.zimablue.puzzlgames.repository.TopicRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -30,15 +31,18 @@ public class QuizService {
         this.answerRepository = answerRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Topic> getAllTopics() {
         return topicRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Topic getTopicBySlug(String slug) {
         return topicRepository.findBySlug(slug)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Тест не найден"));
     }
 
+    @Transactional(readOnly = true)
     public QuizSession startQuiz(String slug) {
         Topic topic = getTopicBySlug(slug);
         List<Long> questionIds = questionRepository.findQuestionIdsByTopicId(topic.getId());
@@ -48,6 +52,7 @@ public class QuizService {
         return QuizSession.start(topic.getSlug(), topic.getTitle(), questionIds);
     }
 
+    @Transactional(readOnly = true)
     public QuestionView getCurrentQuestion(QuizSession session) {
         Long questionId = session.getCurrentQuestionId();
         if (questionId == null) {
@@ -56,7 +61,7 @@ public class QuizService {
 
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Вопрос не найден"));
-        List<Answer> answers = answerRepository.findByQuestionId(questionId);
+        List<Answer> answers = answerRepository.findByQuestion_IdOrderById(questionId);
 
         return QuestionView.builder()
                 .questionId(question.getId())
@@ -67,6 +72,7 @@ public class QuizService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public boolean submitAnswer(QuizSession session, Long answerId) {
         Long questionId = session.getCurrentQuestionId();
         if (questionId == null) {
