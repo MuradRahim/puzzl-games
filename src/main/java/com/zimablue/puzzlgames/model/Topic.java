@@ -1,22 +1,15 @@
 package com.zimablue.puzzlgames.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,9 +31,7 @@ public class Topic {
     private String description;
 
     @Builder.Default
-    @OneToMany(mappedBy = "topic")
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Question> questions = new ArrayList<>();
-
-    @Formula("(SELECT COUNT(*) FROM questions q WHERE q.topic_id = id)")
-    private int questionCount;
 }
