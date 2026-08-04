@@ -2,10 +2,12 @@ package com.zimablue.puzzlgames.controller;
 
 import com.zimablue.puzzlgames.model.Topic;
 import com.zimablue.puzzlgames.service.TopicService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 public class TopicController {
     private final TopicService topicService;
@@ -27,6 +29,12 @@ public class TopicController {
     @GetMapping("/topic/{id}")
     public Topic getTopicsById(@PathVariable Long id) {
         return topicService.getTopicsById(id);
+    }
+
+    @GetMapping("/topic/get-by-title")
+    public Topic getTopicByTitle(@RequestParam("title") String title) {
+        log.info("get-by-title {}", title);
+        return topicService.getTopicsByTitle(title);
     }
 
     @PutMapping("/topic/update")
